@@ -22,7 +22,7 @@ class HabariMarkdown extends Plugin
 		return array(
 			'url' => 'http://habariproject.org/',
 			'name' => 'Habari Markdown',
-			'description' => 'Enables John Gruber\'s Markdown syntax for posts.'
+			'description' => 'Enables John Gruber\'s Markdown syntax for posts.',
 			'license' => 'Apache License 2.0 and BSD (see NOTICE)',
 			'author' => 'Habari Community',
 			'version' => self::VERSION,
