@@ -1,0 +1,7 @@
+= COPYRIGHT NOTICES =
+This product includes code and libraries developed by third parties, which are governed by different licenses.  These components, and their licenses, are listed below.
+
+== PHP MARKDOWN ==
+Copyright (c) 2004-2007 Michel Fortin http://www.michelf.com/projects/php-markdown/
+Original Markdown Copyright (c) 2004-2006 John Gruber  http://daringfireball.net/projects/markdown/
+PHP Markdown is available under a BSD-style open source license; See BSD for a copy of the BSD license.
