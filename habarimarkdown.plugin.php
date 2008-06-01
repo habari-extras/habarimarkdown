@@ -34,7 +34,7 @@ class HabariMarkdown extends Plugin
 		Format::apply( 'markdown', 'post_content_out' );
 		Format::apply( 'markdown', 'post_content_summary' );
 		Format::apply( 'markdown', 'post_content_more' );
-		Format::apply( 'markdown', 'post_content_excrept' );
+		Format::apply( 'markdown', 'post_content_excerpt' );
 		Format::apply( 'markdown', 'post_content_atom' );
 		Format::apply( 'markdown', 'comment_content_out' );
 	}
