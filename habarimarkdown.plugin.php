@@ -7,10 +7,11 @@
  */
 
 require_once "markdown.php";
+require_once "smartypants.php";
 
 class HabariMarkdown extends Plugin
 {
-	const VERSION= '0.3';
+	const VERSION= '0.4';
 	
 	/**
 	* Return plugin metadata for this plugin
@@ -38,6 +39,38 @@ class HabariMarkdown extends Plugin
 		Format::apply( 'markdown', 'post_content_atom' );
 		Format::apply( 'markdown', 'comment_content_out' );
 	}
+
+	/**
+	 * Adds a Configure action to the plugin
+	 * 
+	 * @param array $actions An array of actions that apply to this plugin
+	 * @param string $plugin_id The id of a plugin
+	 * @return array The array of actions
+	 */
+	public function filter_plugin_config( $actions, $plugin_id )
+	{
+		if ( $this->plugin_id() == $plugin_id ){
+			$actions[]= 'Configure';		
+		}
+		return $actions;
+	}
+	
+	/**
+	 * Creates a UI form to handle the plugin configuration
+	 *
+	 * @param string $plugin_id The id of a plugin
+	 * @param array $actions An array of actions that apply to this plugin
+	 */
+	public function action_plugin_ui( $plugin_id, $action )
+	{
+		if ( $this->plugin_id()==$plugin_id && $action=='Configure' )
+			{
+			$form = new FormUI( strtolower(get_class( $this ) ) );
+			$form->append( 'checkbox', 'enable SmartyPants', 'option:habarimarkdown__smarty', _t('Enable SmartyPants') );
+			$form->append( 'submit', 'save', _t( 'Save' ) );
+			$form->out();
+			}
+	}
 }
 
 class MarkdownFormat extends Format
@@ -51,7 +84,13 @@ class MarkdownFormat extends Format
 	
 	public static function markdown( $content )
 	{
-		return Markdown( $content );
+		$smarty_enabled = Options::get( 'habarimarkdown__smarty') || false;
+		if ( $smarty_enabled ) {
+			return SmartyPants( Markdown ($content ) );
+		}
+		else {
+			return Markdown( $content );
+		}
 	}
 }
 
