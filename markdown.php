@@ -170,13 +170,13 @@ if (strcasecmp(substr(__FILE__, -16), "classTextile.php") == 0) {
 	@include_once 'smartypants.php';
 	# Fake Textile class. It calls Markdown instead.
 	class Textile {
-		function TextileThis($text, $lite='', $encode='') {
+		function TextileThis($text, $lite ='', $encode ='') {
 			if ($lite == '' && $encode == '')    $text = Markdown($text);
 			if (function_exists('SmartyPants'))  $text = SmartyPants($text);
 			return $text;
 		}
 		# Fake restricted version: restrictions are not supported for now.
-		function TextileRestricted($text, $lite='', $noimage='') {
+		function TextileRestricted($text, $lite ='', $noimage ='') {
 			return $this->TextileThis($text, $lite);
 		}
 		# Workaround to ensure compatibility with TextPattern 4.0.3.
