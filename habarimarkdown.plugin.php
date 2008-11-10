@@ -11,7 +11,7 @@ require_once "smartypants.php";
 
 class HabariMarkdown extends Plugin
 {
-	const VERSION = '0.4';
+	const VERSION = '0.4.1';
 	
 	/**
 	* Return plugin metadata for this plugin
