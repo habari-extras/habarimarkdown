@@ -11,7 +11,7 @@ require_once "smartypants.php";
 
 class HabariMarkdown extends Plugin
 {
-	const VERSION = '0.4.2';
+	const VERSION = '0.4.3';
 	
 	/**
 	* Return plugin metadata for this plugin
@@ -32,6 +32,11 @@ class HabariMarkdown extends Plugin
 	
 	public function action_init()
 	{
+		// Added by Caius Durling <dev@caius.name> <http://caius.name/>
+		// Escapes unsafe chars in the title
+		Format::apply( 'htmlescape', 'post_title_out' );
+		
+		
 		Format::apply( 'markdown', 'post_content_out' );
 		Format::apply( 'markdown', 'post_content_summary' );
 		Format::apply( 'markdown', 'post_content_more' );
