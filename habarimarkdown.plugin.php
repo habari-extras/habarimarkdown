@@ -11,7 +11,7 @@ require_once "smartypants.php";
 
 class HabariMarkdown extends Plugin
 {
-	const VERSION = '0.4.1';
+	const VERSION = '0.4.2';
 	
 	/**
 	* Return plugin metadata for this plugin
@@ -36,7 +36,6 @@ class HabariMarkdown extends Plugin
 		Format::apply( 'markdown', 'post_content_summary' );
 		Format::apply( 'markdown', 'post_content_more' );
 		Format::apply( 'markdown', 'post_content_excerpt' );
-		Format::apply( 'markdown', 'post_content_atom' );
 		Format::apply( 'markdown', 'comment_content_out' );
 	}
 
@@ -70,6 +69,18 @@ class HabariMarkdown extends Plugin
 			$form->append( 'submit', 'save', _t( 'Save' ) );
 			$form->out();
 			}
+	}
+
+	/**
+	 * Filter Atom Feed
+	 * @param SimpleXMLElement $feed_entry the Atom feed entry
+	 * @param Post $post The post
+	 * @return SimpleXMLElement the filtered Atom feed entry
+	 */
+	public function action_atom_add_post( $feed_entry, $post )
+	{
+		$feed_entry->content = markdown( $post->content );
+		return $feed_entry;
 	}
 }
 
