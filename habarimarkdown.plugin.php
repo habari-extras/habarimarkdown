@@ -13,23 +13,6 @@ class HabariMarkdown extends Plugin
 {
 	const VERSION = '0.4.3';
 	
-	/**
-	* Return plugin metadata for this plugin
-	*
-	* @return array Plugin metadata
-	*/
-	public function info()
-	{
-		return array(
-			'url' => 'http://habariproject.org/',
-			'name' => 'Habari Markdown',
-			'description' => 'Enables John Gruber\'s Markdown syntax for posts.',
-			'license' => 'Apache License 2.0 and BSD (see NOTICE)',
-			'author' => 'Habari Community',
-			'version' => self::VERSION,
-		);
-	}
-	
 	public function action_init()
 	{
 		// Added by Caius Durling <dev@caius.name> <http://caius.name/>
