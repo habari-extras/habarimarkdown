@@ -1,8 +1,10 @@
-<plugin>
-	<url>http://habariproject.org/</url>
+<?xml version="1.0" encoding="utf-8" ?>
+<pluggable type="plugin">
 	<name>Habari Markdown</name>
-	<description>Enables John Gruber\'s Markdown syntax for posts.</description>
-	<license>Apache License 2.0 and BSD (see NOTICE)</license>
-	<author>Habari Community</author>
-</plugin>
-
+	<author url="http://habariproject.org/">Habari Community</author>
+	<version>0.4.3</version>
+	<url>http://habariproject.org/</url>
+	<description><![CDATA[Enables John Gruber\'s Markdown syntax for posts.]]></description>
+	<license url="http://www.apache.org/licenses/LICENSE-2.0.html">Apache License 2.0 and BSD (see NOTICE)</license>
+	<copyright>2009</copyright>
+</pluggable> 
