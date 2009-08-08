@@ -74,13 +74,6 @@ class HabariMarkdown extends Plugin
 
 class MarkdownFormat extends Format
 {
-	// try and take over autop to prevent conflicts...
-	// there really should be a "remove" in Format!
-	public static function autop( $content )
-	{
-		return $content;
-	}
-	
 	public static function markdown( $content )
 	{
 		$smarty_enabled = Options::get( 'habarimarkdown__smarty') || false;
