@@ -21,7 +21,7 @@ class HabariMarkdown extends Plugin
 	Format::apply( 'markdown', 'post_content_summary' );
 	Format::apply( 'markdown', 'post_content_more' );
 	Format::apply( 'markdown', 'post_content_excerpt' );
-	Format::apply( 'markdown', 'comment_content_out' );
+	Format::apply( 'comment_safe_markdown', 'comment_content_out' );
     }
 
     /**
@@ -89,6 +89,19 @@ class MarkdownFormat extends Format
 	else {
 	    return Markdown( $content );
 	}
+    }
+
+    public static function comment_safe_markdown( $content )
+    {
+	$html = '';	
+	$smarty_enabled = Options::get( 'habarimarkdown__smarty' ) || false;
+	if ( $smarty_enabled ) {
+	    $html = SmartyPants( Markdown ( $content ) );
+	}
+	else {
+	    $html = Markdown( $content );
+	}
+	return preg_replace(array('/<a ([^>]*)>/', '/<img [^>]*>/'), array('<a $1 rel="nofollow">', '&lt;&lt;&nbsp;sorry,&nbsp;image&nbsp;embedding&nbsp;prohibited&nbsp;&gt;&gt;'), $html);
     }
 }
 
