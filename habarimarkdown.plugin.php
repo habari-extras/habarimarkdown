@@ -13,15 +13,15 @@ class HabariMarkdown extends Plugin
 {
     public function action_init()
     {
-	// Added by Caius Durling <dev@caius.name> <http://caius.name/>
-	// Escapes unsafe chars in the title
-	Format::apply( 'htmlescape', 'post_title_out' );
+		// Added by Caius Durling <dev@caius.name> <http://caius.name/>
+		// Escapes unsafe chars in the title
+		Format::apply( 'htmlescape', 'post_title_out' );
 
-	Format::apply( 'markdown', 'post_content_out' );
-	Format::apply( 'markdown', 'post_content_summary' );
-	Format::apply( 'markdown', 'post_content_more' );
-	Format::apply( 'markdown', 'post_content_excerpt' );
-	Format::apply( 'comment_safe_markdown', 'comment_content_out' );
+		Format::apply( 'markdown', 'post_content_out' );
+		Format::apply( 'markdown', 'post_content_summary' );
+		Format::apply( 'markdown', 'post_content_more' );
+		Format::apply( 'markdown', 'post_content_excerpt' );
+		Format::apply( 'comment_safe_markdown', 'comment_content_out' );
     }
 
     /**
@@ -33,10 +33,10 @@ class HabariMarkdown extends Plugin
      */
     public function filter_plugin_config( $actions, $plugin_id )
     {
-	if ( $this->plugin_id() == $plugin_id ){
-	    $actions[]= 'Configure';
-	}
-	return $actions;
+		if ( $this->plugin_id() == $plugin_id ){
+			$actions[]= 'Configure';
+		}
+		return $actions;
     }
 
     /**
@@ -47,12 +47,12 @@ class HabariMarkdown extends Plugin
      */
     public function action_plugin_ui( $plugin_id, $action )
     {
-	if ( $this->plugin_id()==$plugin_id && $action=='Configure' ) {
-	    $form = new FormUI( strtolower(get_class( $this ) ) );
-	    $form->append( 'checkbox', 'enable SmartyPants', 'option:habarimarkdown__smarty', _t( 'Enable SmartyPants' ) );
-	    $form->append( 'submit', 'save', _t( 'Save' ) );
-	    $form->out();
-	}
+		if ( $this->plugin_id()==$plugin_id && $action=='Configure' ) {
+			$form = new FormUI( strtolower(get_class( $this ) ) );
+			$form->append( 'checkbox', 'enable SmartyPants', 'option:habarimarkdown__smarty', _t( 'Enable SmartyPants' ) );
+			$form->append( 'submit', 'save', _t( 'Save' ) );
+			$form->out();
+		}
     }
 
     /**
@@ -63,11 +63,11 @@ class HabariMarkdown extends Plugin
      */
     public function action_atom_add_post( $feed_entry, $post )
     {
-	// Only apply changes to unauthenticated viewers.  This allows markdown to be used in atompub clients too.
-	if ( ! User::identify()->loggedin ) {
-	    $feed_entry->content = markdown( $post->content );
-	}
-	return $feed_entry;
+		// Only apply changes to unauthenticated viewers.  This allows markdown to be used in atompub clients too.
+		if ( ! User::identify()->loggedin ) {
+			$feed_entry->content = markdown( $post->content );
+		}
+		return $feed_entry;
     }
 }
 
@@ -77,31 +77,31 @@ class MarkdownFormat extends Format
     // there really should be a "remove" in Format!
     public static function autop( $content )
     {
-	return $content;
+		return $content;
     }
 
     public static function markdown( $content )
     {
-	$smarty_enabled = Options::get( 'habarimarkdown__smarty' ) || false;
-	if ( $smarty_enabled ) {
-	    return SmartyPants( Markdown ( $content ) );
-	}
-	else {
-	    return Markdown( $content );
-	}
+		$smarty_enabled = Options::get( 'habarimarkdown__smarty' ) || false;
+		if ( $smarty_enabled ) {
+			return SmartyPants( Markdown ( $content ) );
+		}
+		else {
+			return Markdown( $content );
+		}
     }
 
     public static function comment_safe_markdown( $content )
     {
-	$html = '';	
-	$smarty_enabled = Options::get( 'habarimarkdown__smarty' ) || false;
-	if ( $smarty_enabled ) {
-	    $html = SmartyPants( Markdown ( $content ) );
-	}
-	else {
-	    $html = Markdown( $content );
-	}
-	return preg_replace(array('/<a ([^>]*)>/', '/<img [^>]*>/'), array('<a $1 rel="nofollow">', '&lt;&lt;&nbsp;sorry,&nbsp;image&nbsp;embedding&nbsp;prohibited&nbsp;&gt;&gt;'), $html);
+		$html = '';
+		$smarty_enabled = Options::get( 'habarimarkdown__smarty' ) || false;
+		if ( $smarty_enabled ) {
+			$html = SmartyPants( Markdown ( $content ) );
+		}
+		else {
+			$html = Markdown( $content );
+		}
+		return preg_replace(array('/<a ([^>]*)>/', '/<img [^>]*>/'), array('<a $1 rel="nofollow">', '&lt;&lt;&nbsp;sorry,&nbsp;image&nbsp;embedding&nbsp;prohibited&nbsp;&gt;&gt;'), $html);
     }
 }
 
