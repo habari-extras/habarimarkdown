@@ -60,6 +60,10 @@ class HabariMarkdown extends Plugin
 	 */
 	public function action_atom_add_post( $feed_entry, $post )
 	{
+		if ( !function_exists( 'Markdown' ) ) {
+			require_once('markdown.php');
+		}
+		
 		// Only apply changes to unauthenticated viewers.  This allows markdown to be used in atompub clients too.
 		if ( ! User::identify()->loggedin ) {
 			$feed_entry->content = markdown( $post->content );
