@@ -14,11 +14,11 @@ class HabariMarkdown extends Plugin
 		// Escapes unsafe chars in the title
 		Format::apply( 'htmlescape', 'post_title_out' );
 
-		Format::apply( 'markdown', 'post_content_out' );
-		Format::apply( 'markdown', 'post_content_summary' );
-		Format::apply( 'markdown', 'post_content_more' );
-		Format::apply( 'markdown', 'post_content_excerpt' );
-		Format::apply( 'comment_safe_markdown', 'comment_content_out' );
+		Format::apply( 'markdown', 'post_content_out_7' );
+		Format::apply( 'markdown', 'post_content_summary_7' );
+		Format::apply( 'markdown', 'post_content_more_7' );
+		Format::apply( 'markdown', 'post_content_excerpt_7' );
+		Format::apply( 'comment_safe_markdown', 'comment_content_out_7' );
 	}
 
 	/**
