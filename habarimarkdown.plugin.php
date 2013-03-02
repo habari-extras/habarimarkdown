@@ -45,7 +45,8 @@ class HabariMarkdown extends Plugin
 	public function action_plugin_ui( $plugin_id, $action )
 	{
 		if ( $this->plugin_id()==$plugin_id && $action=='Configure' ) {
-			$form = new FormUI( strtolower(get_class( $this ) ) );
+            $form = new FormUI( strtolower(get_class( $this ) ) );
+            $form->append( 'checkbox', 'enable MarkdownExtra', 'option:habarimarkdown__extra', _t( 'Use Markdown Extra') );
 			$form->append( 'checkbox', 'enable SmartyPants', 'option:habarimarkdown__smarty', _t( 'Enable SmartyPants' ) );
 			$form->append( 'submit', 'save', _t( 'Save' ) );
 			$form->out();
@@ -60,9 +61,16 @@ class HabariMarkdown extends Plugin
 	 */
 	public function action_atom_add_post( $feed_entry, $post )
 	{
-		if ( !function_exists( 'Markdown' ) ) {
-			require_once('markdown.php');
-		}
+        if ( !function_exists( 'Markdown' ) ) {
+            $use_md_extra = Options::get( 'habarimarkdown__extra', false );
+            if ( $use_md_extra ) {
+                $md_filename = 'markdown-extra.php';
+            }
+            else {
+                $md_filename = 'markdown.php';
+            }
+            require_once( $md_filename );
+        }
 		
 		// Only apply changes to unauthenticated viewers.  This allows markdown to be used in atompub clients too.
 		if ( ! User::identify()->loggedin ) {
@@ -84,9 +92,16 @@ class MarkdownFormat extends Format
 	public static function markdown( $content )
 	{
 
-		if ( !function_exists( 'Markdown' ) ) {
-			require_once('markdown.php');
-		}
+        if ( !function_exists( 'Markdown' ) ) {
+            $use_md_extra = Options::get( 'habarimarkdown__extra', false );
+            if ( $use_md_extra ) {
+                $md_filename = 'markdown-extra.php';
+            }
+            else {
+                $md_filename = 'markdown.php';
+            }
+            require_once( $md_filename );
+        }
 
 		$smarty_enabled = Options::get( 'habarimarkdown__smarty', false );
 		if ( $smarty_enabled ) {
@@ -107,9 +122,16 @@ class MarkdownFormat extends Format
 	public static function comment_safe_markdown( $content )
 	{
 
-		if ( !function_exists( 'Markdown' ) ) {
-			require_once('markdown.php');
-		}
+        if ( !function_exists( 'Markdown' ) ) {
+            $use_md_extra = Options::get( 'habarimarkdown__extra', false );
+            if ( $use_md_extra ) {
+                $md_filename = 'markdown-extra.php';
+            }
+            else {
+                $md_filename = 'markdown.php';
+            }
+            require_once( $md_filename );
+        }
 
 		$html = '';
 		$smarty_enabled = Options::get( 'habarimarkdown__smarty', false );
