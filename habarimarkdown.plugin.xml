@@ -2,7 +2,7 @@
 <pluggable type="plugin">
 	<name>Habari Markdown</name>
 	<author url="http://habariproject.org/">The Habari Community</author>
-	<version>0.4.6</version>
+	<version>0.4.7</version>
 	<url>http://habariproject.org/</url>
 	<description><![CDATA[Enables John Gruber's Markdown syntax for posts.]]></description>
 	<license url="http://www.apache.org/licenses/LICENSE-2.0.html">Apache License 2.0 and BSD (see NOTICE)</license>
