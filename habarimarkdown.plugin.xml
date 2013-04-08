@@ -2,11 +2,11 @@
 <pluggable type="plugin">
 	<name>Habari Markdown</name>
 	<author url="http://habariproject.org/">The Habari Community</author>
-	<version>0.5</version>
+	<version>0.6</version>
 	<url>http://habariproject.org/</url>
 	<description><![CDATA[Enables John Gruber's Markdown syntax for posts. Includes <a href="http://michelf.ca/projects/php-markdown/extra/"> Markdown Extras</a>. Also note it defaults to outputting HTML now, not XHTML.]]></description>
 	<license url="http://www.apache.org/licenses/LICENSE-2.0.html">Apache License 2.0 and BSD (see NOTICE)</license>
-	<copyright>2010</copyright>
+	<copyright>2013</copyright>
 	<guid>5b530155-d8d3-47e7-9b3b-0694cf968516</guid>
 	<help>
 		<value><![CDATA[Full details on John Gruber's Markdown syntax can be found at <a href="http://daringfireball.net/projects/markdown/" target="_blank">http://daringfireball.net/projects/markdown/</a>.]]></value>
