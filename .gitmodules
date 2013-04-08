@@ -1,0 +1,6 @@
+[submodule "php-smartypants"]
+	path = php-smartypants
+	url = git@github.com:michelf/php-smartypants.git
+[submodule "php-markdown"]
+	path = php-markdown
+	url = git@github.com:michelf/php-markdown.git

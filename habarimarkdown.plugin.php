@@ -10,9 +10,13 @@ class HabariMarkdown extends Plugin
 {
 	public function action_init()
 	{
-		// Added by Caius Durling <dev@caius.name> <http://caius.name/>
-		// Escapes unsafe chars in the title
-		Format::apply( 'htmlescape', 'post_title_out' );
+		if ( !class_exists( 'MarkdownExtra' ) ) {
+			require_once('php-markdown/Michelf/Markdown.php');
+			require_once('php-markdown/Michelf/MarkdownExtra.php');
+		}
+		if ( !function_exists( 'SmartyPants' ) && Options::get( 'habarimarkdown__smarty', false ) ) {
+			require_once('php-smartypants/smartypants.php');
+		}
 
 		Format::apply( 'markdown', 'post_content_out_7' );
 		Format::apply( 'markdown', 'post_content_summary_7' );
@@ -60,13 +64,9 @@ class HabariMarkdown extends Plugin
 	 */
 	public function action_atom_add_post( $feed_entry, $post )
 	{
-		if ( !function_exists( 'Markdown' ) ) {
-			require_once('markdown.php');
-		}
-		
 		// Only apply changes to unauthenticated viewers.  This allows markdown to be used in atompub clients too.
 		if ( ! User::identify()->loggedin ) {
-			$feed_entry->content = markdown( $post->content );
+			$feed_entry->content =  MarkdownFormat::markdown( $post->content );
 		}
 		return $feed_entry;
 	}
@@ -74,6 +74,14 @@ class HabariMarkdown extends Plugin
 
 class MarkdownFormat extends Format
 {
+	public static $parser;
+
+	public static function __static()
+	{
+		self::$parser = new \Michelf\MarkdownExtra;
+		self::$parser->empty_element_suffix = '>';
+	}
+
 	// try and take over autop to prevent conflicts...
 	// there really should be a "remove" in Format!
 	public static function autop( $content )
@@ -83,50 +91,17 @@ class MarkdownFormat extends Format
 
 	public static function markdown( $content )
 	{
-
-		if ( !function_exists( 'Markdown' ) ) {
-			require_once('markdown.php');
+		$html = \Michelf\MarkdownExtra::defaultTransform($content);
+		if ( Options::get( 'habarimarkdown__smarty', false ) ) {
+			$html = SmartyPants($html);
 		}
-
-		$smarty_enabled = Options::get( 'habarimarkdown__smarty', false );
-		if ( $smarty_enabled ) {
-			if ( !function_exists( 'SmartyPants' ) ) {
-				require_once('smartypants.php');
-			}
-
-			return SmartyPants( Markdown ( $content ) );
-		}
-		else {
-
-
-
-			return Markdown( $content );
-		}
+		return $html;
 	}
 
 	public static function comment_safe_markdown( $content )
 	{
-
-		if ( !function_exists( 'Markdown' ) ) {
-			require_once('markdown.php');
-		}
-
-		$html = '';
-		$smarty_enabled = Options::get( 'habarimarkdown__smarty', false );
-		if ( $smarty_enabled ) {
-			if ( !function_exists( 'SmartyPants' ) ) {
-				require_once('smartypants.php');
-			}
-
-			$html = SmartyPants( Markdown ( $content ) );
-		}
-		else {
-			$html = Markdown( $content );
-		}
-
 		// filter the HTML, just as a normal comment would be filtered before saving to the database
-		return InputFilter::filter( $html );
-
+		return InputFilter::filter( self::markdown($content) );
 	}
 }
 
