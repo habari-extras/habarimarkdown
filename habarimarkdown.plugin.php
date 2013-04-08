@@ -76,6 +76,7 @@ class MarkdownFormat extends Format
 {
 	public static $parser;
 
+	// this doesn't work right now
 	public static function __static()
 	{
 		self::$parser = new \Michelf\MarkdownExtra;
